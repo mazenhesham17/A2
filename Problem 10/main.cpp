@@ -64,18 +64,18 @@ public:
 
 int main() {
     freopen("input.txt", "r", stdin);
-    int t;
-    cin >> t;
-    while (t--) {
-        int n, k;
-        cin >> n >> k;
+    int tests;
+    cin >> tests;
+    for (int i = 0; i < tests; ++i) {
+        int size, k;
+        cin >> size >> k;
         BST bst;
-        for (int i = 0; i < n; ++i) {
-            int x;
-            cin >> x;
-            bst.insert(x);
+        for (int j = 0; j < size; ++j) {
+            int value;
+            cin >> value;
+            bst.insert(value);
         }
-        cout << bst.kth(k) << '\n';
+        cout << "The summation of the " << k << "-th smallest elements is " << bst.kth(k) << ".\n";
     }
     return 0;
 }

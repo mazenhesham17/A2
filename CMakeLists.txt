@@ -4,4 +4,4 @@ project(A2)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(A2
-        "Problem 9/main.cpp")
+        "Problem 10/main.cpp")

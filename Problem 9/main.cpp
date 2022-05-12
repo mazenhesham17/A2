@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 struct Node {
     int data;
     Node *left;
@@ -20,6 +19,7 @@ private:
         if (left->right == nullptr ^ right->left == nullptr) flag = false;
         if (left->left == nullptr ^ right->right == nullptr) flag = false;
         dfs(left->left, right->right, flag);
+        dfs(right->left, left->right, flag);
     }
 
 public:
@@ -46,24 +46,29 @@ public:
 
     bool isFoldable() {
         bool flag = true;
-        if (root->left == nullptr ^ root->right == nullptr)
-            return false;
-        if (root->left == nullptr && root->right == nullptr)
-            return true;
+        if (root == nullptr) return true;
+        if (root->left == nullptr ^ root->right == nullptr) return false;
+        if (root->left == nullptr && root->right == nullptr) return true;
         dfs(root->left, root->right, flag);
         return flag;
     }
 };
 
 int main() {
-    BST bst;
-    // 5 3 4 7 6
-    // 3 2 1 4 5
-    bst.insert(3);
-    bst.insert(2);
-    bst.insert(1);
-    bst.insert(4);
-    bst.insert(5);
-    cout << bst.isFoldable() << '\n';
+    freopen("input.txt", "r", stdin);
+    int tests;
+    cin >> tests;
+    for (int i = 0; i < tests; ++i) {
+        int size;
+        cin >> size;
+        BST bst;
+        for (int j = 0; j < size; ++j) {
+            int value;
+            cin >> value;
+            bst.insert(value);
+        }
+        cout << "Tree #" << i + 1 << (bst.isFoldable() ? ": is foldable.\n" : ": is not foldable.\n");
+    }
     return 0;
 }
+
