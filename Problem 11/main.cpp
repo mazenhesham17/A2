@@ -1,6 +1,7 @@
 # include <iostream>
 
-using namespace std;
+using namespace std ;
+
 
 struct Node {
     int data;
@@ -58,20 +59,7 @@ public:
 
 };
 
-int main() {
-    freopen("input.txt", "r", stdin);
-    int tests;
-    cin >> tests;
-    for (int i = 0; i < tests; ++i) {
-        int size, k;
-        cin >> size >> k;
-        BST bst;
-        for (int j = 0; j < size; ++j) {
-            int value;
-            cin >> value;
-            bst.insert(value);
-        }
-        cout << "The summation of the " << k << "-th smallest elements is " << bst.kth(k) << ".\n";
-    }
-    return 0;
+int main(){
+
+    return 0 ;
 }

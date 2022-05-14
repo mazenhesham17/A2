@@ -1,6 +1,6 @@
 # ninja log v5
-2	231	6740695984278285	CMakeFiles/A2.dir/Problem_10/main.cpp.obj	938753995178db43
-770	872	6740851497583538	A2.exe	75cb085314788849
-3	770	6740851496596824	CMakeFiles/A2.dir/Problem_9/main.cpp.obj	d1dfd56f4a0afa9
-0	237	6740853905511256	CMakeFiles/A2.dir/Problem_10/main.cpp.obj	938753995178db43
-238	337	6740853906478027	A2.exe	eb5de4565194fdb7
+2	236	6742625270238069	CMakeFiles/A2.dir/Problem_10/main.cpp.obj	938753995178db43
+2	387	6742654352390327	CMakeFiles/A2.dir/Problem_4/main.cpp.obj	43bd8212e920f7ca
+377	490	6742666445059110	A2.exe	75cb085314788849
+2	376	6742666443959112	CMakeFiles/A2.dir/Problem_9/main.cpp.obj	d1dfd56f4a0afa9
+1	718	6741602822945265	CMakeFiles/A2.dir/Problem_3/main.cpp.obj	f27e12eba69eaca0

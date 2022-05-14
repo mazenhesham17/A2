@@ -1,4 +1,6 @@
 # include <iostream>
+# include <vector>
+# include <queue>
 
 using namespace std;
 
@@ -10,7 +12,8 @@ struct Node {
     Node(int _data = 0, Node *_left = nullptr, Node *_right = nullptr) : data(_data), left(_left), right(_right) {}
 };
 
-class BST {
+
+class BT {
 private:
     Node *root;
 
@@ -23,51 +26,74 @@ private:
     }
 
 public:
-    BST() { root = nullptr; }
+    BT() { root = nullptr; }
 
-    void insert(int value) {
-        Node *node = new Node(value);
-        Node *cur, *prev;
-        if (root == nullptr) root = node;
-        else {
-            cur = root;
-            while (cur != nullptr) {
-                prev = cur;
-                if (cur->data == value) return;
-                if (cur->data > value) cur = cur->left;
-                else cur = cur->right;
+    BT(string &tree) {
+        if (tree.empty() || tree.front() == 'N') {
+            root = nullptr;
+        } else {
+            vector<string> nodes;
+            string node;
+            int n = (int) tree.size();
+            for (int i = 0; i < n; ++i) {
+                if (isspace(tree[i])) {
+                    nodes.push_back(node);
+                    node.clear();
+                } else {
+                    node.push_back(tree[i]);
+                }
             }
-            if (prev->data > value)
-                prev->left = node;
-            else
-                prev->right = node;
+            if (!node.empty()) nodes.push_back(node);
+            root = new Node(stoi(nodes.front()));
+            queue<Node *> q;
+            q.push(root);
+            n = (int) nodes.size();
+            for (int i = 1; i < n && !q.empty(); ++i) {
+                auto cur = q.front();
+                q.pop();
+                if (nodes[i] != "N") {
+                    cur->left = new Node(stoi(nodes[i]));
+                    q.push(cur->left);
+                }
+                i++;
+                if (i >= n) break;
+                if (nodes[i] != "N") {
+                    cur->right = new Node(stoi(nodes[i]));
+                    q.push(cur->right);
+                }
+            }
+
         }
+
+
+    }
+
+    bool empty() {
+        return root == nullptr;
     }
 
     bool isFoldable() {
         bool flag = true;
-        if (root == nullptr) return true;
+        if (empty()) return true;
         if (root->left == nullptr ^ root->right == nullptr) return false;
         if (root->left == nullptr && root->right == nullptr) return true;
         dfs(root->left, root->right, flag);
         return flag;
     }
+
 };
+
 
 int main() {
     freopen("input.txt", "r", stdin);
     int tests;
     cin >> tests;
+    cin.ignore();
     for (int i = 0; i < tests; ++i) {
-        int size;
-        cin >> size;
-        BST bst;
-        for (int j = 0; j < size; ++j) {
-            int value;
-            cin >> value;
-            bst.insert(value);
-        }
-        cout << "Tree #" << i + 1 << (bst.isFoldable() ? ": is foldable.\n" : ": is not foldable.\n");
+        string tree;
+        getline(cin, tree);
+        BT bt(tree);
+        cout << "Tree #" << i + 1 << (bt.isFoldable() ? ": is foldable.\n" : ": is not foldable.\n");
     }
     return 0;
 }
