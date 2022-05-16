@@ -57,10 +57,6 @@ public:
         return front->data;
     }
 
-    int getSize() {
-        return size;
-    }
-
     ~queue() {
         while (!empty()) {
             pop();
@@ -68,49 +64,36 @@ public:
     }
 };
 
-class Stack {
-private :
-    queue<int> q;
-public :
-    Stack() {}
-
-    bool empty() {
-        return (q.empty());
-    }
-
-    void pop() {
-        q.pop();
-    }
-
-    int top() {
-        if (q.empty()) {
-            cout << "The Stack is Empty\n";
-        } else
-            return q.getFront();
-    }
-
-    void push(int value) {
-        int s = q.getSize();
-        q.push(value);
-        for (int i = 0; i < s; i++) {
-            int x = q.getFront();
-            q.pop();
-            q.push(x);
-        }
-    }
-};
-
-
 int main() {
-    Stack st;
-    st.push(5);
-    st.push(8);
-    st.push(7);
-    st.push(3);
-    st.push(2);
-    while (!st.empty()) {
-        cout << st.top() << '\n';
-        st.pop();
+    freopen("input.txt", "r", stdin);
+    int tests;
+    cin >> tests;
+    for (int i = 0; i < tests; ++i) {
+        int ticketsRow, k, timer = 1;
+        cin >> ticketsRow >> k;
+        queue<int> tickets, index;
+        for (int j = 0; j < ticketsRow; ++j) {
+            int ticketsNo;
+            cin >> ticketsNo;
+            tickets.push(ticketsNo);
+            index.push(j);
+        }
+        while (tickets.getFront() != 1 || index.getFront() != k) {
+            if (tickets.getFront() > 1) {
+                tickets.getFront() = tickets.getFront() - 1;
+                tickets.push(tickets.getFront());
+                tickets.pop();
+                index.push(index.getFront());
+                index.pop();
+            } else {
+                tickets.pop();
+                index.pop();
+            }
+            timer++;
+        }
+        cout << "The " << k + 1 << "-th person in Row #" << i + 1 << " will buy all the tickets after " << timer
+             << " seconds.\n";
     }
+
     return 0;
 }
