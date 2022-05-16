@@ -4,26 +4,45 @@
 
 using namespace std;
 
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
 
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
-                                                       right(right) {}
+    Node(int _data = 0, Node *_left = nullptr, Node *_right = nullptr) : data(_data), left(_left), right(_right) {}
 };
+
 
 class BT {
 private:
-    TreeNode *root;
-public:
-    BT() {
-        root = nullptr;
+    Node *root;
+
+    void inOrder(Node *cur) {
+        if (cur == nullptr)
+            return;
+        inOrder(cur->left);
+        cout << cur->data << ' ';
+        inOrder(cur->right);
     }
+
+    Node *mirror(Node *root) {
+        // Base Case
+        if (root == nullptr)
+            return root;
+        Node *t = root->left;
+        root->left = root->right;
+        root->right = t;
+
+        if (root->left)
+            mirror(root->left);
+        if (root->right)
+            mirror(root->right);
+
+        return root;
+    }
+
+public:
+    BT() { root = nullptr; }
 
     BT(string &tree) {
         if (tree.empty() || tree.front() == 'N') {
@@ -41,21 +60,21 @@ public:
                 }
             }
             if (!node.empty()) nodes.push_back(node);
-            root = new TreeNode(stoi(nodes.front()));
-            queue<TreeNode *> q;
+            root = new Node(stoi(nodes.front()));
+            queue<Node *> q;
             q.push(root);
             n = (int) nodes.size();
             for (int i = 1; i < n && !q.empty(); ++i) {
                 auto cur = q.front();
                 q.pop();
                 if (nodes[i] != "N") {
-                    cur->left = new TreeNode(stoi(nodes[i]));
+                    cur->left = new Node(stoi(nodes[i]));
                     q.push(cur->left);
                 }
                 i++;
                 if (i >= n) break;
                 if (nodes[i] != "N") {
-                    cur->right = new TreeNode(stoi(nodes[i]));
+                    cur->right = new Node(stoi(nodes[i]));
                     q.push(cur->right);
                 }
             }
@@ -65,26 +84,16 @@ public:
 
     }
 
-    bool isEmpty() {
+    bool empty() {
         return root == nullptr;
     }
 
-    bool isSymmetric() {
-        if (root == nullptr || check(root->left, root->right))
-            return true;
+    void inOrder() {
+        inOrder(root);
     }
 
-    bool check(TreeNode *subleft, TreeNode *subright) {
-        if (!subleft && !subright)
-            return true;
-        else if (subleft != nullptr && subright != nullptr)
-            return (subright->val == subleft->val && check(subleft->left, subright->right) &&
-                    check(subleft->right, subright->left));
-        return false;
-    }
-
-    bool isSameTree() {
-        return true;
+    Node *mirror() {
+        return mirror(root);
     }
 
 };
@@ -99,7 +108,14 @@ int main() {
         string tree;
         getline(cin, tree);
         BT bt(tree);
-        cout << "Tree #" << i + 1 << (bt.isSymmetric() ? ": is symmetric.\n" : ": is not symmetric.\n");
+        cout << "Tree #" << i + 1 << " :\n";
+        cout << "In-Order Before Mirroring : ";
+        bt.inOrder();
+        bt.mirror();
+        cout << "In-Order Before Mirroring : ";
+        bt.inOrder();
+        cout << '\n';
     }
     return 0;
 }
+
