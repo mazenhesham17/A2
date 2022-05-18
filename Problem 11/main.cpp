@@ -117,6 +117,10 @@ public:
         cout << '\n';
     }
 
+    bool empty() {
+        return root == nullptr;
+    }
+
     ~BST() {
         clear(root);
     }
@@ -124,6 +128,7 @@ public:
 };
 
 bool isSubtree(BST &first, BST &second) {
+    if (first.empty() || second.empty()) return true;
     return first.isSubtree(second);
 }
 
