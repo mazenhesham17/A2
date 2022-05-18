@@ -39,6 +39,16 @@ private:
         }
     }
 
+    void clear(Node *cur) {
+        if (cur == nullptr) {
+            return;
+        }
+        clear(cur->left);
+        clear(cur->right);
+        delete cur;
+        cur = nullptr;
+    }
+
 public:
     BST() { root = nullptr; }
 
@@ -54,6 +64,10 @@ public:
         int ans = 0;
         DFS(root, k, ans);
         return ans;
+    }
+
+    ~BST() {
+        clear(root);
     }
 
 };

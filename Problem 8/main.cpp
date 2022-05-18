@@ -41,6 +41,17 @@ private:
         s.push_back(cur->data);
     }
 
+    void clear(Node *cur) {
+        if (cur == nullptr) {
+            return;
+        }
+        clear(cur->left);
+        clear(cur->right);
+        delete cur;
+        cur = nullptr;
+    }
+
+
 public:
     BT() { root = nullptr; }
 
@@ -56,6 +67,10 @@ public:
         string tree;
         dfs(root, tree);
         return tree;
+    }
+
+    ~BT() {
+        clear(root);
     }
 
 };

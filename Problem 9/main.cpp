@@ -25,6 +25,16 @@ private:
         dfs(right->left, left->right, flag);
     }
 
+    void clear(Node *cur) {
+        if (cur == nullptr) {
+            return;
+        }
+        clear(cur->left);
+        clear(cur->right);
+        delete cur;
+        cur = nullptr;
+    }
+
 public:
     BT() { root = nullptr; }
 
@@ -81,8 +91,11 @@ public:
         return flag;
     }
 
-};
+    ~BT() {
+        clear(root);
+    }
 
+};
 
 int main() {
     freopen("input.txt", "r", stdin);

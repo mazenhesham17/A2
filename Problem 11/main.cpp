@@ -73,6 +73,16 @@ private:
             range(cur->right, l, r);
     }
 
+    void clear(Node *cur) {
+        if (cur == nullptr) {
+            return;
+        }
+        clear(cur->left);
+        clear(cur->right);
+        delete cur;
+        cur = nullptr;
+    }
+
 public:
     BST() { root = nullptr; }
 
@@ -106,6 +116,11 @@ public:
         range(root, l, r);
         cout << '\n';
     }
+
+    ~BST() {
+        clear(root);
+    }
+
 };
 
 bool isSubtree(BST &first, BST &second) {
@@ -113,7 +128,7 @@ bool isSubtree(BST &first, BST &second) {
 }
 
 int main() {
-    freopen("input.txt","r",stdin) ;
+    freopen("input.txt", "r", stdin);
     int tests;
     cin >> tests;
     cout << "Check Balance : \n";

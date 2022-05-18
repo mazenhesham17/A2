@@ -21,6 +21,16 @@ class BT {
 private:
     TreeNode *root;
 
+    void clear(TreeNode *cur) {
+        if (cur == nullptr) {
+            return;
+        }
+        clear(cur->left);
+        clear(cur->right);
+        delete cur;
+        cur = nullptr;
+    }
+
     bool isSameTree(TreeNode *p, TreeNode *q) {
 
         if (p == nullptr && q == nullptr)
@@ -88,6 +98,10 @@ public:
 
     bool isSameTree(BT &tree) {
         return isSameTree(root, tree.root);
+    }
+
+    ~BT() {
+        clear(root);
     }
 
 };

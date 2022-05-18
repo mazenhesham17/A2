@@ -41,6 +41,16 @@ private:
         return root;
     }
 
+    void clear(Node *cur) {
+        if (cur == nullptr) {
+            return;
+        }
+        clear(cur->left);
+        clear(cur->right);
+        delete cur;
+        cur = nullptr;
+    }
+
 public:
     BT() { root = nullptr; }
 
@@ -94,6 +104,10 @@ public:
 
     Node *mirror() {
         return mirror(root);
+    }
+
+    ~BT() {
+        clear(root);
     }
 
 };

@@ -20,6 +20,17 @@ struct TreeNode {
 class BT {
 private:
     TreeNode *root;
+
+    void clear(TreeNode *cur) {
+        if (cur == nullptr) {
+            return;
+        }
+        clear(cur->left);
+        clear(cur->right);
+        delete cur;
+        cur = nullptr;
+    }
+
 public:
     BT() {
         root = nullptr;
@@ -83,10 +94,9 @@ public:
         return false;
     }
 
-    bool isSameTree() {
-        return true;
+    ~BT() {
+        clear(root);
     }
-
 };
 
 
